@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mac-Rep – Apple Reparatur</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #ffffff; /* komplett weiß */
+      color: #000;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* Scrollbar: zentriert, Edge-Fade, endloser Loop, KEINE Linie */
+    .scrollbar {
+      background: #ffffff;
+      border-bottom: none;     /* Linie entfernt */
+      padding: 18px 0;
+    }
+
+    .scrollbar-viewport {
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      /* weiches Ausfaden an den Rändern */
+      mask-image: linear-gradient(to right, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+    }
+
+    /* Track enthält ZWEI identische Reihen -> nahtlose Endlosschleife */
+    .scrollbar-track {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+      animation: scrollLoop 36s linear infinite; /* Geschwindigkeit anpassen */
+    }
+    /* KEIN Stoppen bei Hover: keine :hover-Regel mehr */
+
+    /* Eine Reihe der Icons/Bilder */
+    .scrollbar-row {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ALLE Bilder gleich groß */
+    .scrollbar img {
+      height: 96px;
+      flex: 0 0 auto; /* kein Schrumpfen */
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* bewegt den Track um genau eine Reihenbreite */
+    @keyframes scrollLoop {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px 40px;
+      background: #ffffff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 { font-size: 48px; font-weight: 600; margin-bottom: 10px; }
+    .hero p  { font-size: 20px; color: #555; margin-bottom: 30px; }
+    .hero a  { font-size: 17px; color: #0071e3; text-decoration: none; }
+
+    .section { padding: 80px 20px; text-align: center; background: #ffffff; }
+    .section h2 { font-size: 36px; margin-bottom: 20px; }
+
+    /* Bild unter "Unsere Services" */
+    .services-banner {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      border-radius: 16px;
+      display: block;
+      width: 100%;
+      height: auto;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    /* Kontaktfläche */
+    .contact { background: #ffffff; }
+    .contact-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+      text-align: left;
+    }
+    .contact-card, .contact-details {
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      padding: 24px;
+      background: #ffffff;
+    }
+    .contact-card h3 { font-size: 22px; margin-bottom: 12px; }
+    .contact-card p  { color: #555; margin-bottom: 18px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-col { display: flex; flex-direction: column; }
+
+    label { font-size: 14px; color: #444; margin-bottom: 6px; }
+    input, textarea, select {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #0071e3;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn:hover { opacity: .9; }
+
+    .contact-details h4 { font-size: 18px; margin-bottom: 10px; }
+    .contact-list { list-style: none; }
+    .contact-list li { margin-bottom: 10px; color: #333; }
+    .contact-list a { color: #0071e3; }
+
+    footer {
+      background: #ffffff;
+      color: #555;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 14px;
+      border-top: 1px solid #e5e5e5;
+    }
+    footer a { color: #555; }
+
+    @media (max-width: 900px) {
+      .contact-wrap { grid-template-columns: 1fr; }
+      .scrollbar-viewport { max-width: 92vw; }
+      .section h2 { font-size: 30px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      .section h2 { font-size: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Professionelle Mac-Reparatur</h1>
+    <p>MacBook, iMac, Mac mini – schnell & zuverlässig</p>
+    <a href="#kontakt">Jetzt Reparatur anfragen &rsaquo;</a>
+  </section>
+
+  <!-- Scrollende Bilderleiste – echte Endlosschleife (ohne Hover-Stopp, ohne Linie unten) -->
+  <div class="scrollbar" aria-label="Scrollende Mac Bilderleiste (Endlosschleife)">
+    <div class="scrollbar-viewport">
+      <!-- Track mit zwei identischen Reihen -->
+      <div class="scrollbar-track" aria-hidden="true">
+        <!-- Reihe 1 -->
+        <div class="scrollbar-row">
+          <img src="https://i.imgur.com/ehF4RY3.png" alt="Mac-Rep 1" />
+          <img src="https://i.imgur.com/nWbH1IN.png" alt="Mac-Rep 2" />
+          <img src="https://i.imgur.com/qyK4hJW.png" alt="Mac-Rep 3" />
+          <img src="https://i.imgur.com/YAKUgIZ.png" alt="Mac-Rep 4" />
+          <img src="https://i.imgur.com/mkvr1E5.png" alt="Mac-Rep 5" />
+          <img src="https://i.imgur.com/hnYR1YG.png" alt="Mac-Rep 6" />
+          <img src="https://i.imgur.com/IUE2eXL.jpg" alt="Blue iMac" />
+        </div>
+        <!-- Reihe 2 (identisch, für nahtlosen Loop) -->
+        <div class="scrollbar-row" aria-hidden="true">
+          <img src="https://i.imgur.com/ehF4RY3.png" alt="" />
+          <img src="https://i.imgur.com/nWbH1IN.png" alt="" />
+          <img src="https://i.imgur.com/qyK4hJW.png" alt="" />
+          <img src="https://i.imgur.com/YAKUgIZ.png" alt="" />
+          <img src="https://i.imgur.com/mkvr1E5.png" alt="" />
+          <img src="https://i.imgur.com/hnYR1YG.png" alt="" />
+          <img src="https://i.imgur.com/IUE2eXL.jpg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unsere Services + gewünschtes Imgur-Bild darunter -->
+  <section class="section" id="services">
+    <h2>Unsere Services</h2>
+    <img
+      class="services-banner"
+      src="https://i.imgur.com/stkA1bd.jpg"
+      alt="MacRep Services Übersicht"
+      loading="lazy" />
+  </section>
+
+  <!-- Kontakt -->
+  <section class="section contact" id="kontakt" aria-labelledby="kontakt-heading">
+    <h2 id="kontakt-heading">Kontakt & Reparaturanfrage</h2>
+    <div class="contact-wrap" role="group" aria-label="Kontaktformular und Kontaktdaten">
+      <div class="contact-card">
+        <h3>Schnelle Anfrage</h3>
+        <p>Beschreibe kurz dein Problem – wir melden uns mit Preis & Termin.</p>
+
+        <form action="#" method="post">
+          <div class="form-row">
+            <div class="form-col">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Max Mustermann" required />
+            </div>
+            <div class="form-col">
+              <label for="email">E-Mail</label>
+              <input id="email" name="email" type="email" placeholder="max@beispiel.de" required />
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:12px;">
+            <div class="form-col">
+              <label for="telefon">Telefon (optional)</label>
+              <input id="telefon" name="telefon" type="tel" placeholder="+49 ..." />
+            </div>
+            <div class="form-col">
+              <label for="geraet">Gerät</label>
+              <select id="geraet" name="geraet" required>
+                <option value="">Bitte wählen</option>
+                <option>MacBook</option>
+                <option>iMac</option>
+                <option>Mac mini</option>
+                <option>Sonstiges</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-col" style="margin-top:12px;">
+            <label for="beschreibung">Kurzbeschreibung</label>
+            <textarea id="beschreibung" name="beschreibung" placeholder="Z. B. ‚MacBook startet nicht, lauter Lüfter, Flüssigkeitsschaden‘" required></textarea>
+          </div>
+
+          <button class="btn" type="submit">Anfrage senden</button>
+        </form>
+      </div>
+
+      <aside class="contact-details" aria-label="Kontaktdaten">
+        <h4>Direkter Kontakt</h4>
+        <ul class="contact-list">
+          <li><strong>Telefon:</strong> <a href="tel:+4928419796060">02841 9796060</a></li>
+          <li><strong>E-Mail:</strong> <a href="mailto:service@mac-rep.de">service@mac-rep.de</a></li>
+          <li><strong>Adresse:</strong> Filderstrasse 22, 47441 Moers</li>
+          <li><strong>Öffnungszeiten:</strong> Mo–Fr 10–18 Uhr</li>
+        </ul>
+        <div style="margin-top:12px;">
+          <a class="btn" href="mailto:service@mac-rep.de">E-Mail schreiben</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Mac-Rep.de – Apple Reparatur vom Profi <br />
+    <a href="#">Impressum</a> | <a href="#">Datenschutz</a> | <a href="#">AGB</a>
+  </footer>
+
+</body>
+</html>
